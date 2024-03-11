@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="1.css">
+</head>
+<body>
+    <div class="container">
+  <table class="sortTableByColumn" id="dataTable">
+    <thead>
+      <tr>
+        <th>Select</th>
+        <th id> ID</th>
+        <th>p.name</th>
+        <th>title</th>
+        <th>description</th>
+        <th>vendor</th>
+        <th>stock</th>
+        <th>price</th>
+        <th>b.price</th>
+        <th>p.quantity</th>
+        <th>type</th>
+        <th>s.rate</th>
+        <th>re.limit</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="checkbox"></td>
+        <th>1</th>
+        <th>A</th>
+        <th>mens cream</th>
+        <th>for men</th>
+        <th>Fazal</th>
+        <th>yes</th>
+        <th>10</th>
+        <th>15</th>
+        <th>22</th>
+        <th>cosmetics</th>
+        <th>10</th>
+        <th>0</th>
+        <th>lahore</th>
+        <td>
+            <button>Add Vendor</button>
+            <button>Add Product</button>
+            <button>Edit Product</button>
+        </td>
+        
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <th>2</th>
+        <th>B</th>
+        <th>couf</th>
+        <th>for men</th>
+        <th>Mehmod</th>
+        <th>yes</th>
+        <th>15</th>
+        <th>90</th>
+        <th>10</th>
+        <th>formest</th>
+        <th>33</th>
+        <th>0</th>
+        <th>lahore</th>
+        <td>
+            <button>Add Vendor</button>
+            <button>Add Product</button>
+            <button>Edit Product</button>
+        </td>
+        
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <th>3</th>
+        <th>C</th>
+        <th>leptop</th>
+        <th>for all</th>
+        <th>Lenovo</th>
+        <th>yes</th>
+        <th>70</th>
+        <th>40</th>
+        <th>16</th>
+        <th>Lenovo</th>
+        <th>10</th>
+        <th>0</th>
+        <th>Multan</th>
+        <td>
+            <button>Add Vendor</button>
+            <button>Add Product</button>
+            <button>Edit Product</button>
+        </td>
+        
+      </tr>
+      <tr>
+        <td><input type="checkbox"></td>
+        <th>4</th>
+        <th>D</th>
+        <th>Phone</th>
+        <th>for some </th>
+        <th>infinex</th>
+        <th>yes</th>
+        <th>14</th>
+        <th>40</th>
+        <th>60</th>
+        <th>infinix</th>
+        <th>1</th>
+        <th>4</th>
+        <th>ict</th>
+        <td>
+            <button>Add Vendor</button>
+            <button>Add Product</button>
+            <button>Edit Product</button>
+        </td>
+        
+      </tr>
+   
+    </tbody>
+  </table>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const headers = document.querySelectorAll("#dataTable th");
+
+        headers.forEach(header => {
+            header.addEventListener("click", () => {
+                const table = header.closest("table");
+                const headerIndex = Array.prototype.indexOf.call(header.parentElement.children, header);
+                const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+                rows.sort((a, b) => {
+                    const aValue = a.children[headerIndex].textContent.trim();
+                    const bValue = b.children[headerIndex].textContent.trim();
+
+                    if (!isNaN(aValue) && !isNaN(bValue)) {
+                        return parseFloat(aValue) - parseFloat(bValue);
+                    } else {
+                        return aValue.localeCompare(bValue);
+                    }
+                });
+
+                // Reverse the order if the current order is ascending
+                if (header.dataset.order === "asc") {
+                    rows.reverse();
+                    header.dataset.order = "desc";
+                } else {
+                    header.dataset.order = "asc";
+                }
+
+                // Re-append rows to the table body
+                const tbody = table.querySelector("tbody");
+                tbody.innerHTML = "";
+                rows.forEach(row => tbody.appendChild(row));
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
